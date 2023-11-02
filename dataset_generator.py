@@ -1,3 +1,7 @@
+# Rania Maharani Narendra
+# 2106650222
+# Kode Asdos 1
+
 from random import randint
 
 def main():
