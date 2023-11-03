@@ -4,201 +4,56 @@
 
 import math, time, tracemalloc
 
-
 def main():
     # read dataset
     small_sorted = read_file("small_sorted.txt")
-    med_sorted = read_file("med_sorted.txt")
-    large_sorted = read_file("large_sorted.txt")
+    run_check("Small Sorted", small_sorted)
 
     small_random = read_file("small_random.txt")
-    med_random = read_file("med_random.txt")
-    large_random = read_file("large_random.txt")
+    run_check("Small Random", small_random)
 
     small_reversed = read_file("small_reversed.txt")
+    run_check("Small Reversed", small_reversed)
+
+    med_sorted = read_file("med_sorted.txt")
+    run_check("Medium Sorted", med_sorted)
+
+    med_random = read_file("med_random.txt")
+    run_check("Medium Random", med_random)
+
     med_reversed = read_file("med_reversed.txt")
+    run_check("Medium Reversed", med_reversed)
+
+    large_sorted = read_file("large_sorted.txt")
+    run_check("Large Sorted", large_sorted)
+
+    large_random = read_file("large_random.txt")
+    run_check("Large Random", large_random)
+
     large_reversed = read_file("large_reversed.txt")
+    run_check("Large Reversed", large_reversed)
 
-    
-    # # sorted in BCIS vs counting sort
-    print("=================Small Sorted==============")
-    result_small_sorted = small_sorted[:]
+
+def run_check(cond, input, ):
+    print(f"================={cond}==============")
+    result = input[:]
     tracemalloc.start()
     start = time.time()
-    BCIS(result_small_sorted)
+    BCIS(result)
     end = time.time()
     memory_stats = tracemalloc.get_traced_memory()
+    tracemalloc.stop
     print("time executed for BCIS: " + str((end-start)* 1000))
     print(f"memory usage: {memory_stats[1] / 10**6} MB")
 
-    k = max(small_sorted)
-    result_small_sorted_2 = [0] * len(small_sorted)
+    k = max(input)
     tracemalloc.start()
+    result2 = [0] * len(input)
     start = time.time()
-    counting_sort(small_sorted, result_small_sorted_2, k)
+    counting_sort(input, result2, k)
     end = time.time()
     memory_stats = tracemalloc.get_traced_memory()
-    print("time executed for Counting Sort: " + str((end-start)* 1000))
-    print(f"memory usage: {memory_stats[1] / 10**6} MB")
-
-    print("=================Small Random==============")
-    result_small_random = small_random[:]
-    tracemalloc.start()
-    start = time.time()
-    BCIS(result_small_random)
-    end = time.time()
-    memory_stats = tracemalloc.get_traced_memory()
-    print("time executed for BCIS: " + str((end-start)* 1000))
-    print(f"memory usage: {memory_stats[1] / 10**6} MB")
-
-    k = max(small_random)
-    result_small_random_2 = [0] * len(small_random)
-    tracemalloc.start()
-    start = time.time()
-    counting_sort(small_random, result_small_random_2, k)
-    end = time.time()
-    memory_stats = tracemalloc.get_traced_memory()
-    print("time executed for Counting Sort: " + str((end-start)* 1000))
-    print(f"memory usage: {memory_stats[1] / 10**6} MB")
-
-    print("=================Small Reversed==============")
-    result_small_reversed = small_reversed[:]
-    tracemalloc.start()
-    start = time.time()
-    BCIS(result_small_reversed)
-    end = time.time()
-    memory_stats = tracemalloc.get_traced_memory()
-    print("time executed for BCIS: " + str((end-start)* 1000))
-    print(f"memory usage: {memory_stats[1] / 10**6} MB")
-
-    k = max(small_reversed)
-    result_small_reversed_2 = [0] * len(small_reversed)
-    tracemalloc.start()
-    start = time.time()
-    counting_sort(small_reversed, result_small_reversed_2, k)
-    end = time.time()
-    memory_stats = tracemalloc.get_traced_memory()
-    print("time executed for Counting Sort: " + str((end-start)* 1000))
-    print(f"memory usage: {memory_stats[1] / 10**6} MB")
-
-    print("=================Medium Sorted==============")
-    result_med_sorted = med_sorted[:]
-    tracemalloc.start()
-    start = time.time()
-    BCIS(result_med_sorted)
-    end = time.time()
-    memory_stats = tracemalloc.get_traced_memory()
-    print("time executed for BCIS: " + str((end-start)* 1000))
-    print(f"memory usage: {memory_stats[1] / 10**6} MB")
-
-    k = max(med_sorted)
-    result_med_sorted_2 = [0] * len(med_sorted)
-    tracemalloc.start()
-    start = time.time()
-    counting_sort(med_sorted, result_med_sorted_2, k)
-    end = time.time()
-    memory_stats = tracemalloc.get_traced_memory()
-    print("time executed for Counting Sort: " + str((end-start)* 1000))
-    print(f"memory usage: {memory_stats[1] / 10**6} MB")
-
-    print("=================Medium Random==============")
-    result_med_random = med_random[:]
-    tracemalloc.start()
-    start = time.time()
-    BCIS(result_med_random)
-    end = time.time()
-    memory_stats = tracemalloc.get_traced_memory()
-    print("time executed for BCIS: " + str((end-start)* 1000))
-    print(f"memory usage: {memory_stats[1] / 10**6} MB")
-
-    k = max(med_random)
-    result_med_random_2 = [0] * len(med_random)
-    tracemalloc.start()
-    start = time.time()
-    counting_sort(med_random, result_med_random_2, k)
-    end = time.time()
-    memory_stats = tracemalloc.get_traced_memory()
-    print("time executed for Counting Sort: " + str((end-start)* 1000))
-    print(f"memory usage: {memory_stats[1] / 10**6} MB")
-
-    print("=================Medium Reversed==============")
-    result_med_reversed = med_reversed[:]
-    tracemalloc.start()
-    start = time.time()
-    BCIS(result_med_reversed)
-    end = time.time()
-    memory_stats = tracemalloc.get_traced_memory()
-    print("time executed for BCIS: " + str((end-start)* 1000))
-    print(f"memory usage: {memory_stats[1] / 10**6} MB")
-
-    k = max(med_reversed)
-    result_med_reversed_2 = [0] * len(med_reversed)
-    tracemalloc.start()
-    start = time.time()
-    counting_sort(med_reversed, result_med_reversed_2, k)
-    end = time.time()
-    memory_stats = tracemalloc.get_traced_memory()
-    print("time executed for Counting Sort: " + str((end-start)* 1000))
-    print(f"memory usage: {memory_stats[1] / 10**6} MB")
-
-
-    print("=================Large Sorted==============")
-    result_large_sorted = large_sorted[:]
-    tracemalloc.start()
-    start = time.time()
-    BCIS(result_large_sorted)
-    end = time.time()
-    memory_stats = tracemalloc.get_traced_memory()
-    print("time executed for BCIS: " + str((end-start)* 1000))
-    print(f"memory usage: {memory_stats[1] / 10**6} MB")
-
-    k = max(large_sorted)
-    result_large_sorted_2 = [0] * len(large_sorted)
-    tracemalloc.start()
-    start = time.time()
-    counting_sort(large_sorted, result_large_sorted_2, k)
-    end = time.time()
-    memory_stats = tracemalloc.get_traced_memory()
-    print("time executed for Counting Sort: " + str((end-start)* 1000))
-    print(f"memory usage: {memory_stats[1] / 10**6} MB")
-
-    print("=================Large Random==============")
-    result_large_random = large_random[:]
-    tracemalloc.start()
-    start = time.time()
-    BCIS(result_large_random)
-    end = time.time()
-    memory_stats = tracemalloc.get_traced_memory()
-    print("time executed for BCIS: " + str((end-start)* 1000))
-    print(f"memory usage: {memory_stats[1] / 10**6} MB")
-
-    k = max(large_random)
-    result_large_random_2 = [0] * len(large_random)
-    tracemalloc.start()
-    start = time.time()
-    counting_sort(large_random, result_large_random_2, k)
-    end = time.time()
-    memory_stats = tracemalloc.get_traced_memory()
-    print("time executed for Counting Sort: " + str((end-start)* 1000))
-    print(f"memory usage: {memory_stats[1] / 10**6} MB")
-
-    print("=================Large Reversed==============")
-    result_large_reversed= large_reversed[:]
-    tracemalloc.start()
-    start = time.time()
-    BCIS(result_large_reversed)
-    end = time.time()
-    memory_stats = tracemalloc.get_traced_memory()
-    print("time executed for BCIS: " + str((end-start)* 1000))
-    print(f"memory usage: {memory_stats[1] / 10**6} MB")
-
-    k = max(large_reversed)
-    result_large_reversed_2 = [0] * len(large_reversed)
-    tracemalloc.start()
-    start = time.time()
-    counting_sort(large_reversed, result_large_reversed_2, k)
-    end = time.time()
-    memory_stats = tracemalloc.get_traced_memory()
+    tracemalloc.stop
     print("time executed for Counting Sort: " + str((end-start)* 1000))
     print(f"memory usage: {memory_stats[1] / 10**6} MB")
 
@@ -302,4 +157,4 @@ def counting_sort(A, B, k):
 
 if __name__ == "__main__":
     main()
-
+    
