@@ -1,8 +1,4 @@
-# Rania Maharani Narendra
-# 2106650222
-# Kode Asdos 1
-
-from random import randint
+import random
 
 def main():
     # generate dataset: sorted
@@ -18,19 +14,6 @@ def main():
     sorted_data_generator(large_sorted, 50000)
     write_array_to_file("large_sorted.txt", large_sorted)
 
-    # generate dataset: random
-    small_random = []
-    random_data_generator(small_random, 500)
-    write_array_to_file("small_random.txt", small_random)
-
-    med_random = []
-    random_data_generator(med_random, 5000)
-    write_array_to_file("med_random.txt", med_random)
-
-    large_random = []
-    random_data_generator(large_random, 50000)
-    write_array_to_file("large_random.txt", large_random)
-
     # generate dataset: reversed
     small_reversed = small_sorted.copy()
     small_reversed.reverse()
@@ -44,6 +27,19 @@ def main():
     large_reversed.reverse()
     write_array_to_file("large_reversed.txt", large_reversed)
 
+    # generate dataset: random
+    small_random = small_sorted.copy()
+    random.shuffle(small_random)
+    write_array_to_file("small_random.txt", small_random)
+
+    med_random = med_sorted.copy()
+    random.shuffle(med_random)
+    write_array_to_file("med_random.txt", med_random)
+
+    large_random = large_sorted.copy()
+    random.shuffle(large_random)
+    write_array_to_file("large_random.txt", large_random)
+
 def write_array_to_file(filename, data):
     with open(filename, 'w') as file:
         for item in data:  
@@ -53,10 +49,5 @@ def sorted_data_generator(a, size):
     for i in range(size):
         a.append(i)
 
-def random_data_generator(a, size):
-    for i in range(size):
-        a.append(randint(0,100))
-
 if __name__ == "__main__":
     main()
-
