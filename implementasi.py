@@ -34,7 +34,7 @@ def main():
     run_check("Large Reversed", large_reversed)
 
 
-def run_check(cond, input, ):
+def run_check(cond, input):
     print(f"================={cond}==============")
     result = input[:]
     tracemalloc.start()
